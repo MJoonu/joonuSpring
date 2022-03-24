@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+    <aop:aspectj-autoproxy/>
+    <bean id="traceAspect" class="joonu.spring.common.UpdateMemberInfoTraceAspect"/>
+    <bean id="cacheAspect" class="joonu.spring.common.AricleCacheAspect"/>
+    <bean id="loggingAspect" class="joonu.spring.common.LoggingAspect"/>
+    <bean id="readArticleService" class="joonu.spring.board.service.ReadArticleServiceImpl"/>
+    <bean id="memberService" class="joonu.spring.member.service.MemberServiceImpl"/>
+</beans>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+<context:component-scan base-package="joonu.spring.web"></context:component-scan>
+	<aop:aspectj-autoproxy/>
+	<context:property-placeholder location="classpath:config/database.properties"/>
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@152.70.90.15:1521/XE"/>
+		<property name="username" value="wnsdn"/>
+		<property name="password" value="wnsdn"/>
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<!-- 트렌젝션으로 설정 -->
+	<bean id="txManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut expression="execution(* joonu.spring.web..*(..))" id="txPointcut" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+
+
+
+
+
+	<!-- <bean id="tv" class="joonu.spring.polymorphism.SamsungTV" p:speaker-ref="sony" p:price="2800000"> namespace p check-->
+	<!-- <bean id="tv" class="joonu.spring.polymorphism.SamsungTV"> -->
+		<!-- <constructor-arg ref="apple"></constructor-arg>
+		<constructor-arg value="3000000"></constructor-arg> -->
+		<!-- <property name="speaker" ref="apple"/>
+		<property name="price" value="30000000"/> -->
+	<!-- </bean>
+	<bean id="sony" class="joonu.spring.polymorphism.SonySpeaker"/>
+	<bean id="apple" class="joonu.spring.polymorphism.AppleSpeaker"/> -->
+	<!-- <bean id="tv" class="joonu.spring.polymorphism.SamsungTV" init-method="start" destroy-method="stop"/> -->
+	<!-- <bean id="tv" class="joonu.spring.polymorphism.SamsungTV" lazy-init="true"/> -->
+	<!-- <bean id="tv" class="joonu.spring.polymorphism.SamsungTV" scope="singleton"/> -->
+	
+	<!-- <bean id="collectionBean" class="joonu.spring.collection.CollectionBean">
+		<property name="addressList">
+			<list>
+				<value>서울시 서초구 서초동</value>
+				<value>서울시 동대문구 장안동</value>
+			</list>
+		</property>
+	</bean> -->
+
+	<!-- <bean name="handlerFactory" class="joonu.spring.myfactory.ProtocolHandlerFactory">
+		<property name="handlers">
+			<map>
+				<entry>
+					<key><value>soap</value></key>
+					<ref bean="soapHandler"/>
+				</entry>
+				<entry>
+					<key><value>rest</value></key>
+					<ref bean="restHandler"/>
+				</entry>
+			</map>
+		</property>
+	</bean> -->
+	
+	<!-- <bean id="collectionBean" class="joonu.spring.collection.CollectionBean">
+		<property name="addressList">
+			<map>
+				<entry>
+					<key><value>홍길동</value></key>
+					<value>율도국</value>
+				</entry>
+				<entry>
+					<key><value>손오공</value></key>
+					<value>화과산</value>
+				</entry>
+			</map>
+		</property>
+	</bean> -->
+	
+	<!-- <bean id="collectionBean" class="joonu.spring.collection.CollectionBean">
+		<property name="addressList">
+			<props>
+				<prop key="홍길동">율도국</prop>
+				<prop key="손오공">화과산</prop>
+			</props>
+		</property>
+	</bean> -->
+	
+	<!--<bean id="collectionBean" class="joonu.spring.collection.CollectionBean">
+		<property name="addressList">
+			<set value-type="java.lang.String">
+				<value>서울시 서초구 서초동</value>
+				<value>서울시 동대문구 장안동</value>
+				<value>서울시 동대문구 장안동</value>
+				<value>서울시 동대문구 장안동</value>
+			</set>
+		</property>
+	</bean>	 -->
+	
+	<!-- <context:component-scan base-package="joonu.spring.polymorphism"></context:component-scan>
+	<bean id="sony" class="joonu.spring.polymorphism.SonySpeaker"/>	 -->
+	
+<!--	<context:component-scan base-package="joonu.spring.web"></context:component-scan>-->
+<!--	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>-->
+	
+	<!-- <bean id="userService" class="joonu.spring.web.user.impl.UserServiceImpl">
+		<property name="userDAO" ref="userDAO"/>
+	</bean>
+	<bean id="userDAO" class="joonu.spring.web.user.impl.UserDAO"></bean> -->
+	
+	
+	
+	<!-- <bean id="log" class="joonu.spring.web.common.Log4jAdvice"></bean> -->
+	<!-- <bean id="log" class="joonu.spring.web.common.Log4jAdvice"></bean> -->
+	<!-- <bean id="before" class="joonu.spring.web.common.BeforeAdvice"></bean>  -->
+	<!-- <bean id="afterReturning" class="joonu.spring.web.common.AfterReturningAdvice"></bean> -->
+	 <!-- <bean id="afterThrowing" class="joonu.spring.web.common.AfterThrowingAdvice"></bean>  -->
+	<!-- <bean id="after" class="joonu.spring.web.common.AfterAdvice"></bean> -->
+	<!-- <bean id="around" class="joonu.spring.web.common.AroundAdvice"></bean>
+	<aop:config>
+		<aop:pointcut expression="execution(* joonu.spring.web..*Impl.*(..))" id="allPointcut"/>
+		<aop:pointcut expression="execution(* joonu.spring.web..*Impl.get*(..))" id="getPointcut"/>
+		<aop:aspect ref="around">
+			<aop:around method="aroundLog" pointcut-ref="getPointcut"/>
+		</aop:aspect>
+	</aop:config> -->	
+		<!-- <aop:aspect ref="afterThrowing">
+			<aop:after-throwing method="exceptionLog" pointcut-ref="allPointcut" throwing="e"/>
+		</aop:aspect> -->
+		
+		<!-- <aop:aspect ref="afterReturning">
+			<aop:after-returning method="afterLog" pointcut-ref="getPointcut" returning="returnObj"/>
+		</aop:aspect> -->
+		
+		<!-- <aop:aspect ref="before">
+			<aop:before method="beforeLog" pointcut-ref="getPointcut"/>
+		</aop:aspect> -->
+		<!-- <aop:aspect ref="log">
+			<aop:after method="printLogging" pointcut-ref="allPointcut"/>
+		</aop:aspect> -->
+		
+		<!-- <aop:aspect ref="before">
+			<aop:before method="beforeLog" pointcut-ref="getPointcut"/>
+		</aop:aspect> -->
+		
+		<!-- <aop:aspect ref="afterReturning">
+			<aop:after-returning method="afterLog" pointcut-ref="getPointcut"/>
+		</aop:aspect> -->
+		<!-- <aop:aspect ref="afterThrowing">
+			<aop:after-throwing method="exceptionLog" pointcut-ref="allPointcut"/>
+		</aop:aspect>
+		<aop:aspect ref="after">
+			<aop:after-throwing method="finallyLog" pointcut-ref="allPointcut"/>
+		</aop:aspect> -->
+		<!-- <aop:aspect ref="around">
+			<aop:around method="aroundLog" pointcut-ref="allPointcut"/>
+		</aop:aspect> -->
+
+<!--	<bean id="performanceTraceAdvice" class="joonu.spring.common.ProfilingAdvice"></bean>-->
+<!--	<aop:config>-->
+<!--		<aop:aspect id="traceAspect1" ref="performanceTraceAdvice">-->
+<!--			<aop:pointcut id="publicMethod" expression="execution(public * joonu.spring.board.service..*(..))"/>-->
+<!--			<aop:around pointcut-ref="publicMethod" method="trace"/>-->
+<!--		</aop:aspect>-->
+<!--		<aop:aspect id="traceAspect2" ref="performanceTraceAdvice">-->
+<!--			<aop:around pointcut="execution(public * joonu.spring.member.service..*(..))" method="trace"/>-->
+<!--		</aop:aspect>-->
+<!--	</aop:config>-->
+<!--	<bean id="writeArticleService" class="joonu.spring.board.service.WriteArticleServiceImpl">-->
+<!--		<constructor-arg><ref bean="articleDAO"/> </constructor-arg>-->
+<!--	</bean>-->
+<!--	<bean id="articleDAO" class="joonu.spring.board.dao.OracleArticleDAO"/>-->
+<!--	<bean id="memberService" class="joonu.spring.member.service.MemberServiceImpl"></bean>-->
+
+</beans>

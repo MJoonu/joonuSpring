@@ -14,6 +14,8 @@ public class BoardDAOSpring {
 
     private final String BOARD_INSERT = "insert into myboard(seq, title, writer, content)"
             + "values((select nvl(max(seq), 0) + 1 from myboard), ?, ?, ?)";
+//    private final String BOARD_INSERT =
+//        "insert into myboard(seq, title, writer, content) values(?, ?, ?, ?)"; // 1000번 글 등록 실험
     private final String BOARD_UPDATE = "update myboard set title=?,"
             + "content=? where seq=?";
     private final String BOARD_DELETE = "delete myboard where seq=?";
@@ -23,6 +25,7 @@ public class BoardDAOSpring {
     public void insertBoard(BoardVO vo){
         System.out.println("spring JDBC 로 insertBoard() 기능 처리");
         jdbcTemplate.update(BOARD_INSERT, vo.getTitle(), vo.getWriter(), vo.getContent());
+//        jdbcTemplate.update(BOARD_INSERT, vo.getSeq(), vo.getTitle(), vo.getWriter(), vo.getContent()); // 1000번글 등록 실험
     }
     public void updateBoard(BoardVO vo){
         System.out.println("spring JDBC 로 updateBoard() 기능 처리");

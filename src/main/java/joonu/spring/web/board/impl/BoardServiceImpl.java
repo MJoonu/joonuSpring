@@ -32,7 +32,8 @@ public class BoardServiceImpl implements BoardService{
 //		if(vo.getSeq() == 0) {// 임의로 예외적용
 //			throw new IllegalArgumentException("0번 글은 등록할 수 없습니다.");
 //		}
-		boardDAO.insertBoard(vo);
+		boardDAO.insertBoard(vo);// 1000번 글 등록
+//		boardDAO.insertBoard(vo); // Exception 발생
 	}
 
 	
