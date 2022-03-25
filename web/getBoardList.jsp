@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--
   Created by IntelliJ IDEA.
   User: junu
@@ -5,10 +6,10 @@
   Time: 5:40 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="joonu.spring.web.board.impl.BoardDAO" %>
-<%@ page import="joonu.spring.web.board.BoardVO" %>
-<%@ page import="java.util.List" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="joonu.spring.web.board.BoardVO"%>
+<%@ page import="java.util.List"%>
+
 <%
 //    //1. 사용자 입력 정보 추출 : 검색 기능은 추후 구현
 //
@@ -50,25 +51,35 @@
         <th>등록일</th>
         <th>조회수</th>
     </tr>
-        <% for(BoardVO board: boardList){ %>
-    <tr>
-        <td>
-            <%=board.getSeq() %>
-        </td>
-        <td>
-            <a href="getBoard.do?seq=<%=board.getSeq() %>"><%=board.getTitle() %></a>
-        </td>
-        <td>
-            <%=board.getWriter() %>
-        </td>
-        <td>
-            <%=board.getRegDate() %>
-        </td>
-        <td>
-            <%=board.getCnt() %>
-        </td>
-    </tr>
-    <% } %>
+<%--        <% for(BoardVO board: boardList){ %>--%>
+<%--    <tr>--%>
+<%--        <td>--%>
+<%--            <%=board.getSeq() %>--%>
+<%--        </td>--%>
+<%--        <td>--%>
+<%--            <a href="getBoard.do?seq=<%=board.getSeq() %>"><%=board.getTitle() %></a>--%>
+<%--        </td>--%>
+<%--        <td>--%>
+<%--            <%=board.getWriter() %>--%>
+<%--        </td>--%>
+<%--        <td>--%>
+<%--            <%=board.getRegDate() %>--%>
+<%--        </td>--%>
+<%--        <td>--%>
+<%--            <%=board.getCnt() %>--%>
+<%--        </td>--%>
+<%--    </tr>--%>
+<%--    <% } %>--%>
+    <c:forEach var="board" items="${boardList}">
+        <tr>
+            <td>${board.seq }</td>
+            <td><a href="getBoard.do?seq=${board.seq }">${board.title }</a></td> 
+            <td>${board.writer }</td>
+            <td>${board.regDate }</td>
+            <td>${board.cnt }</td>
+        </tr>
+    </c:forEach>
+
 </table><br>
 <a href="insertBoard.jsp">새글 작성</a>
 </body>
