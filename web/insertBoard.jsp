@@ -13,7 +13,7 @@
 <body>
 <h1>글등록</h1>
 <a href="logoutProc.jsp">Log Out</a><hr>
-<form action="insertBoardProc.jsp" method="post"> <table border="1">
+<form action="insertBoard.do" method="post"> <table border="1">
     <tr>
         <td>제목</td>
         <td><input type="text" name="title"/></td>

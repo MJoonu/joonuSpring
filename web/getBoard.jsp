@@ -10,17 +10,21 @@
 <%@ page import="joonu.spring.web.board.BoardVO" %>
 
 <%
-    //1. 검색할 게시글 번호 호출
-    String seq = request.getParameter("seq");
+//    //1. 검색할 게시글 번호 호출
+//    String seq = request.getParameter("seq");
+//
+//    //2. 데이터베이스 연동 처리
+//    BoardVO vo = new BoardVO();
+//    vo.setSeq(Integer.parseInt(seq));
+//
+//    BoardDAO boardDAO = new BoardDAO();
+//    BoardVO board = boardDAO.getBoard(vo);
+//
+//    //3. 응답 화면 구현
 
-    //2. 데이터베이스 연동 처리
-    BoardVO vo = new BoardVO();
-    vo.setSeq(Integer.parseInt(seq));
+    //세션에 저장한 게시글 정보를 추출한다.
+    BoardVO board = (BoardVO) session.getAttribute("board");
 
-    BoardDAO boardDAO = new BoardDAO();
-    BoardVO board = boardDAO.getBoard(vo);
-
-    //3. 응답 화면 구현
 %>
 
 <html>
@@ -29,8 +33,8 @@
 </head>
 <body>
 <h1> 글 상세 </h1>
-<a href="logoutProc.jsp">Log out</a><hr>
-<form action="updateBoardProc.jsp" method="post">
+<a href="logout.do">Log out</a><hr>
+<form action="updateBoard.do" method="post">
 <input name=“seq” type="hidden" value="<%=board.getSeq() %>" />
     <table border="1">
         <tr>
@@ -59,7 +63,7 @@
     </table>
 </form><hr>
 <a href="insertBoard.jsp">글등록</a>&nbsp;&nbsp;&nbsp;
-<a href="deleteBoardProc.jsp?seq=<%=board.getSeq()%>">글삭제</a>&nbsp;&nbsp;&nbsp;
-<a href="getBoardList.jsp">글목록</a>
+<a href="deleteBoardProc.do?seq=<%=board.getSeq()%>">글삭제</a>&nbsp;&nbsp;&nbsp;
+<a href="getBoardList.do">글목록</a>
 </body>
 </html>
